@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import axios from 'axios';
 import {
   MapPin,
   Mail,
@@ -9,6 +10,8 @@ import {
   Send,
   CheckCircle,
 } from 'lucide-react';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const quickLinks = [
   { to: '/', label: 'Home' },
@@ -21,13 +24,26 @@ const quickLinks = [
 const Footer = () => {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
-    if (!/^\S+@\S+\.\S+$/.test(email)) return;
-    setSubscribed(true);
-    setEmail('');
-    setTimeout(() => setSubscribed(false), 4000);
+    setError('');
+
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      setError('Enter a valid email');
+      return;
+    }
+
+    try {
+      await axios.post(`${API_URL}/api/newsletter`, { email });
+      setSubscribed(true);
+      setEmail('');
+      setTimeout(() => setSubscribed(false), 4000);
+    } catch {
+      setError('Something went wrong. Try again.');
+      setTimeout(() => setError(''), 4000);
+    }
   };
 
   return (
@@ -76,9 +92,9 @@ const Footer = () => {
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-geofoam-highlight to-orange-500 flex items-center justify-center text-white font-bold text-sm shadow-md group-hover:scale-105 transition-transform">
               G
             </div>
-          <span className="text-2xl font-bold text-white tracking-tight font-display">
-  GeoFoam <span className="text-geofoam-highlight">Blocks</span>
-</span>
+            <span className="text-2xl font-bold text-white tracking-tight font-display">
+              GeoFoam <span className="text-geofoam-highlight">Blocks</span>
+            </span>
           </Link>
           <p className="text-sm leading-relaxed text-white/60 mb-5">
             Lightweight Geofoam solutions for roads, bridges, and buildings
@@ -192,12 +208,21 @@ const Footer = () => {
                 <CheckCircle size={12} /> Subscribed! Check your inbox.
               </motion.p>
             )}
+            {error && (
+              <motion.p
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-xs text-red-400 mt-2"
+              >
+                {error}
+              </motion.p>
+            )}
           </form>
 
           <ul className="space-y-2.5 text-sm">
             <li>
               <a
-                href="mailto:info@geofoamindia.com"
+                href="mailto:info@geofoamblocks.com"
                 className="flex items-center gap-2 text-white/60 hover:text-geofoam-highlight transition-colors"
               >
                 <Mail size={15} className="text-geofoam-highlight shrink-0" />

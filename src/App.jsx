@@ -9,6 +9,7 @@ import Contact from './pages/Contact';
 import About from './pages/About';
 import Calculator from './pages/Calculator';
 import WhatsAppButton from './components/WhatsAppButton';
+import AdminNewsletter from './pages/AdminNewsletter';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -38,6 +39,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
           <Route path="/calculator" element={<Calculator />} />
+          <Route path="/admin/newsletter" element={<AdminNewsletter />} />
         </Routes>
       </AnimatePresence>
       <Footer />
