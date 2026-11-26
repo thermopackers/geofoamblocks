@@ -40,7 +40,8 @@ const Footer = () => {
       setSubscribed(true);
       setEmail('');
       setTimeout(() => setSubscribed(false), 4000);
-    } catch {
+    } catch (err)  {
+        console.error('Newsletter error:', err.response?.data || err.message);
       setError('Something went wrong. Try again.');
       setTimeout(() => setError(''), 4000);
     }
