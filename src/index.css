@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --color-geofoam-dark: #1a1a2e;
+  --color-geofoam-primary: #16213e;
+  --color-geofoam-accent: #0f3460;
+  --color-geofoam-highlight: #e94560;
+  --color-geofoam-light: #f5f5f5;
+
+  /* Fonts */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cinzel", ui-serif, Georgia, serif;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--color-geofoam-light);
+    color: #1f2937;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Cinzel on all headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    letter-spacing: 0.01em;
+  }
+}
+
+/* Utility for forcing Cinzel on non-heading elements (brand spans, stat numbers, etc.) */
+@utility font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+}
+
+@utility btn-primary {
+  background-color: var(--color-geofoam-highlight);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: #dc2626;
+    transform: scale(1.05);
+  }
+}
+
+@utility card {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  overflow: hidden;
+  transition: all 0.3s;
+
+  &:hover {
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  }
+}
